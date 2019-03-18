@@ -38,7 +38,44 @@
     yes
     I KNEW IT! Thank you.
 -}
+--average :: (Integral b, RealFrac a) => a -> a -> b
+average a b  = (a+b) `div` 2
 
+--guessIt :: Int -> IO ()
+-- guessIt 11 = putStrLn "Wait.. I have already guessed everything! Cheater."
+guessIt s u l = do
+    if (u-l) > 2
+        then do
+            putStrLn $ "Is your number greater than " ++ show s ++ "? (answer \"yes\" or \"no\") "
+            yesno <- getLine
+            if yesno == "yes"
+                then do guessIt ((average s u)) u s
+                else do guessIt ((average s l)) s l
+        else do 
+            putStrLn $ "Is your number " ++ show s ++ "? (answer \"yes\" or \"no\") "
+            yesno <- getLine
+            if yesno == "yes"
+                then do putStrLn "I KNEW IT! Thank you."
+                else do 
+                    putStrLn $ "Is your number " ++ show u ++ "? (answer \"yes\" or \"no\") "
+                    guess <- getLine
+                    if guess == "yes"
+                        then do putStrLn "I KNEW IT! Thank you."
+                        else do 
+                            putStrLn $ "Is your number " ++ show l ++ "? (answer \"yes\" or \"no\") "
+                            poop <- getLine
+                            if poop == "yes"
+                                then do putStrLn "I KNEW IT! Thank you."
+                                else do putStrLn "Wait.. I have already guessed everything! Cheater."
+                        
+                    
+            
+
+
+main = do
+    putStrLn "Think of a number between 1 and 1000 and I will guess it."
+    guessIt 500 1000 0
+{-
 guessIt :: Int -> IO ()
 guessIt 11 = putStrLn "Wait.. I have already guessed everything! Cheater."
 guessIt s = do
@@ -51,3 +88,4 @@ guessIt s = do
 main = do
     putStrLn "Think of a number between 1 and 10 and I will guess it."
     guessIt 1
+    -}
